@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="048f59d6-7c01-4acc-aab2-60942ae0f755" name="Default" comment="Aug 1 2:35 PM">
-      <change afterPath="$PROJECT_DIR$/src/Main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Register.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Register.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,11 +51,20 @@
       <file leaf-file-name="Register.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Register.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="12" column="27" lean-forward="true" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+            <state relative-caret-position="203">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constants.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/constants.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="64" selection-start-column="64" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -104,10 +110,11 @@
         <option value="$PROJECT_DIR$/src/Header.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/Main.js" />
-        <option value="$PROJECT_DIR$/src/Register.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
         <option value="$PROJECT_DIR$/src/Register.css" />
         <option value="$PROJECT_DIR$/src/Main.css" />
+        <option value="$PROJECT_DIR$/src/constants.js" />
+        <option value="$PROJECT_DIR$/src/Register.js" />
       </list>
     </option>
   </component>
@@ -241,7 +248,7 @@
       <updated>1532922101243</updated>
       <workItem from="1532922104098" duration="158000" />
       <workItem from="1533104934379" duration="834000" />
-      <workItem from="1533106107761" duration="5323000" />
+      <workItem from="1533106107761" duration="6542000" />
     </task>
     <task id="LOCAL-00001" summary="Aug 1 2:35 PM">
       <created>1533105372352</created>
@@ -254,7 +261,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6315000" />
+    <option name="totallyTimeSpent" value="7534000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="436" y="23" width="844" height="698" extended-state="0" />
@@ -400,10 +407,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="64" selection-start-column="64" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Register.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="27" lean-forward="true" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
+        <state relative-caret-position="203">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
