@@ -1,6 +1,8 @@
-@import '~antd/dist/antd.css';
-@import "Main.css";
-@import "Register.css";
+@import '../../node_modules/antd/dist/antd.css';
+@import "./Main.css";
+@import "./Register.css";
+@import "./Login.css";
+@import "Header.css";
 
 .App {
     text-align: center;
@@ -23,6 +25,10 @@
     float: left;
     color: #61dafb;
     padding-top: 16px;
+}
+
+.App-intro {
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
