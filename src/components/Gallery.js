@@ -17,7 +17,7 @@ export class Gallery extends React.Component {
     }
 
     render() {
-        const images = this.props.image.map((image) => {
+        const images = this.props.images.map((image) => {
             return {
                 ...image,
                 customOverlay: (

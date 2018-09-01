@@ -1,12 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
-import { Tabs, Button, Spin } from 'antd';
+import { Tabs, Spin } from 'antd';
 import { GEO_OPTIONS, POS_KEY, API_ROOT, TOKEN_KEY, AUTH_PREFIX } from '../constants';
 import { Gallery } from './Gallery';
-
-const TabPane = Tabs.TabPane;
-
-const operations = <Button>Extra Action</Button>;
+import {CreatePostButton} from './CreatePostButton';
 
 export class Home extends React.Component {
 
@@ -78,7 +75,7 @@ export class Home extends React.Component {
         const { latitude, longitude } = JSON.parse(localStorage.getItem(POS_KEY));
         this.setState({ loadingPosts: true });
         $.ajax({
-            url: `${API_ROOT}/search?lat=${latitude}&lon=${longitude}&range=20000`,
+            url: `${API_ROOT}/search?lat=${latitude}&lon=${longitude}&range=2000000`,
             method: 'GET',
             headers: {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`
@@ -92,11 +89,13 @@ export class Home extends React.Component {
     }
 
     render() {
-        console.log(this.state);
+        const TabPane = Tabs.TabPane;
+        const operations = <CreatePostButton type="primary">Create New Post</CreatePostButton>;
         return (
             <Tabs tabBarExtraContent={operations} className="main-tabs">
                 <TabPane tab="Posts" key="1">{this.getGalleryPanelContent()}</TabPane>
-                <TabPane tab="Map" key="2">Content of tab 2</TabPane>
+                <TabPane tab="Video Posts" key="2">Content of tab 2</TabPane>
+                <TabPane tab="Map" key="3">Content of tab 3</TabPane>
             </Tabs>
         );
     }
