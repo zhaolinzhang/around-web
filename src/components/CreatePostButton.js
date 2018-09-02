@@ -1,33 +1,27 @@
 import React from 'react';
-import { Modal, Button, message } from 'antd';
 import $ from 'jquery';
+import { Modal, Button, message } from 'antd';
 import { WrappedCreatePostForm } from './CreatePostForm';
-import {API_ROOT, AUTH_PREFIX, POS_KEY, TOKEN_KEY} from '../constants';
+import { API_ROOT, POS_KEY, AUTH_PREFIX, TOKEN_KEY, LOC_SHAKE } from '../constants';
 
 export class CreatePostButton extends React.Component {
     state = {
         visible: false,
         confirmLoading: false,
     }
-
     showModal = () => {
         this.setState({
             visible: true,
         });
     }
-
     handleOk = () => {
-        this.form.validateFields((errors, values) => {
-            if (!errors) {
-
-                this.setState({ confirmLoading: true });
-
-                const { latitude, longitude } = JSON.parse(localStorage.getItem(POS_KEY));
-                const token = localStorage.getItem(TOKEN_KEY);
-
+        this.setState({ confirmLoading: true });
+        this.form.validateFields((err, values) => {
+            if (!err) {
+                const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
                 const formData = new FormData();
-                formData.set('lat', latitude);
-                formData.set('lon', longitude);
+                formData.set('lat', lat + Math.random() * LOC_SHAKE * 2 - LOC_SHAKE);
+                formData.set('lon', lon + Math.random() * LOC_SHAKE * 2 - LOC_SHAKE);
                 formData.set('message', values.message);
                 formData.set('image', values.image[0].originFileObj);
 
@@ -36,38 +30,34 @@ export class CreatePostButton extends React.Component {
                     method: 'POST',
                     data: formData,
                     headers: {
-                        Authorization: `${AUTH_PREFIX} ${token}`,
+                        Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
                     },
                     processData: false,
                     contentType: false,
                     dataType: 'text',
-                }).then(() => {
+                }).then((response) => {
+                    message.success('Created a post successfully!');
                     this.form.resetFields();
-                    message.success('Successfully created a post');
                     this.setState({ visible: false, confirmLoading: false });
                     this.props.loadNearbyPosts();
-                }, () => {
-                    message.error('Failed to create a post');
-                    this.setState({ confirmLoading: false });
-                }).catch((e) => {
-                    console.log(e);
+                }, (response) => {
+                    message.error(response.responseText);
+                    this.setState({ visible: false, confirmLoading: false });
+                }).catch((error) => {
+                    console.log(error);
                 });
             }
-
         });
     }
-
     handleCancel = () => {
         console.log('Clicked cancel button');
         this.setState({
             visible: false,
         });
     }
-
-    saveFromRef = (formInstance) => {
-        this.form = formInstance;
+    saveFormRef = (form) => {
+        this.form = form;
     }
-
     render() {
         const { visible, confirmLoading } = this.state;
         return (
@@ -80,7 +70,7 @@ export class CreatePostButton extends React.Component {
                        confirmLoading={confirmLoading}
                        onCancel={this.handleCancel}
                 >
-                    <WrappedCreatePostForm ref={this.saveFromRef}/>
+                    <WrappedCreatePostForm ref={this.saveFormRef}/>
                 </Modal>
             </div>
         );

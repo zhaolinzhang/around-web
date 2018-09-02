@@ -3,8 +3,7 @@ import { Form, Icon, Input, Upload } from 'antd';
 
 const FormItem = Form.Item;
 
-export class CreatePostForm extends React.Component {
-
+class CreatePostForm extends React.Component {
     normFile = (e) => {
         console.log('Upload event:', e);
         if (Array.isArray(e)) {
@@ -18,24 +17,20 @@ export class CreatePostForm extends React.Component {
     }
 
     render() {
-        const { getFieldDecorator} = this.props.form;
+        const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
             wrapperCol: { span: 14 },
         };
         return (
-            <Form>
+            <Form layout="vertical">
                 <FormItem
                     {...formItemLayout}
-                    label="Message"
-                >
-                    {getFieldDecorator('username', {
-                        rules: [{
-                            required: true,
-                            message: 'Please input a message',
-                        }],
+                    label="Message">
+                    {getFieldDecorator('message', {
+                        rules: [{ required: true, message: 'Please input a message.' }],
                     })(
-                        <Input/>
+                        <Input />
                     )}
                 </FormItem>
                 <FormItem
@@ -46,10 +41,7 @@ export class CreatePostForm extends React.Component {
                         {getFieldDecorator('image', {
                             valuePropName: 'fileList',
                             getValueFromEvent: this.normFile,
-                            rules: [{
-                                required: true,
-                                message: 'Please select an image',
-                            }],
+                            rules: [{ required: true, message: 'Please select an image.' }],
                         })(
                             <Upload.Dragger name="files" beforeUpload={this.beforeUpload}>
                                 <p className="ant-upload-drag-icon">
