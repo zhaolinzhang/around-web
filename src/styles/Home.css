@@ -1,6 +1,13 @@
 .main-tabs {
-    width: 80%;
-    margin-top: 40px;
-    padding-left: 80px;
-    padding-right: 80px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.topic-radio-group {
+    margin-bottom: 20px;
+}
+
+.video-block {
+    height: 400px;
+    width: 220px;
 }

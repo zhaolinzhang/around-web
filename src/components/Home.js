@@ -1,12 +1,13 @@
 import React from 'react';
 import $ from 'jquery';
-import { Tabs, Spin } from 'antd';
+import { Tabs, Spin, Row, Col, Radio } from 'antd';
 import { GEO_OPTIONS, POS_KEY, API_ROOT, TOKEN_KEY, AUTH_PREFIX } from '../constants';
 import { Gallery } from './Gallery';
 import { CreatePostButton } from './CreatePostButton';
 import { WrappedAroundMap } from './AroundMap';
 
 const TabPane = Tabs.TabPane;
+const RadioGroup = Radio.Group;
 
 export class Home extends React.Component {
     state = {
@@ -14,6 +15,7 @@ export class Home extends React.Component {
         loadingPost: false,
         error: '',
         posts: [],
+        topic: 'around',
     }
 
     componentDidMount() {
@@ -50,8 +52,9 @@ export class Home extends React.Component {
         this.setState({ loadingPosts: true, error: '' });
         const { lat, lon } = location ? location : JSON.parse(localStorage.getItem(POS_KEY));
         const radius = range ? range : 20;
+        const endPoint = this.state.topic === 'around' ? 'search' : 'cluster';
         $.ajax({
-            url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${radius}`,
+            url: `${API_ROOT}/${endPoint}?lat=${lat}&lon=${lon}&range=${radius}&term=${this.state.topic}`,
             method: 'GET',
             headers: {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
@@ -67,7 +70,7 @@ export class Home extends React.Component {
         });
     }
 
-    getGalleryPanelContent = () => {
+    getPanelContent = (type) => {
         if (this.state.error) {
             return <div>{this.state.error}</div>;
         } else if (this.state.loadingGeoLocation) {
@@ -75,7 +78,20 @@ export class Home extends React.Component {
         } else if (this.state.loadingPosts) {
             return <Spin tip="Loading posts..."/>;
         } else if (this.state.posts && this.state.posts.length > 0) {
-            const images = this.state.posts.map((post) => {
+            if (type === 'image') {
+                return this.getImagePosts();
+            } else {
+                return this.getVideoPosts();
+            }
+        } else {
+            return <div>Found nothing...</div>;
+        }
+    }
+
+    getImagePosts = () => {
+        const images = this.state.posts
+            .filter((post) => post.type === 'image')
+            .map((post) => {
                 return {
                     user: post.user,
                     src: post.url,
@@ -85,10 +101,27 @@ export class Home extends React.Component {
                     thumbnailHeight: 300,
                 };
             });
-            return <Gallery images={images}/>;
-        } else {
-            return '';
-        }
+        return <Gallery images={images}/>;
+    }
+
+    getVideoPosts = () => {
+        return (
+            <Row gutter={24}>
+                {
+                    this.state.posts
+                        .filter((post) => post.type === 'video')
+                        .map((post) => (
+                            <Col span={6} key={post.url}>
+                                <video src={post.url} controls={true} className="video-block"></video>
+                            </Col>
+                        ))
+                }
+            </Row>
+        );
+    }
+
+    onTopicChange = (e) => {
+        this.setState({ topic: e.target.value }, this.loadNearbyPosts);
     }
 
     render() {
@@ -96,11 +129,18 @@ export class Home extends React.Component {
 
         return (
             <div className="main-tabs">
+                <RadioGroup className="topic-radio-group" value={this.state.topic} onChange={this.onTopicChange}>
+                    <Radio value="around">Posts Around Here</Radio>
+                    <Radio value="face">Faces Around The World</Radio>
+                </RadioGroup>
                 <Tabs tabBarExtraContent={operations}>
-                    <TabPane tab="Posts" key="1">
-                        {this.getGalleryPanelContent()}
+                    <TabPane tab="Image Posts" key="1">
+                        {this.getPanelContent('image')}
                     </TabPane>
-                    <TabPane tab="Map" key="2">
+                    <TabPane tab="Video Posts" key="2">
+                        {this.getPanelContent('video')}
+                    </TabPane>
+                    <TabPane tab="Map" key="3">
                         <WrappedAroundMap
                             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
                             loadingElement={<div style={{ height: `100%` }} />}
